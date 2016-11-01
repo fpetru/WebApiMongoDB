@@ -46,10 +46,13 @@ namespace NotebookAppApi.Data
             return result.DeletedCount > 0;
         }
 
-        public async void UpdateNote(string id, Note item)
+        public async void UpdateNote(string id, string body)
         {
             var filter = Builders<Note>.Filter.Eq(s => s.Id, id);
-            var result = await _context.Notes.ReplaceOneAsync(filter, item);
+            var update = Builders<Note>.Update
+                            .Set(s => s.Body, body)
+                            .CurrentDate(s => s.UpdatedOn);
+            var result = await _context.Notes.UpdateOneAsync(filter, update);
         }
 
         public void RemoveAllNotes()

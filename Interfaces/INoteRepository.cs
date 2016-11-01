@@ -10,7 +10,9 @@ namespace NotebookAppApi.Interfaces
         Task<Note> GetNote(string id);
         void AddNote(Note item);
         Task<bool> RemoveNote(string id);
+        void UpdateNote(string id, string body);
+
+        // should be used with cautious, only in relation with demo setup
         void RemoveAllNotes();
-        void UpdateNote(string id, Note item);
     }
 }

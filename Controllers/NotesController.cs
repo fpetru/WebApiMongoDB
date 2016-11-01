@@ -6,6 +6,7 @@ using Microsoft.Extensions.Options;
 using NotebookAppApi.Interfaces;
 using NotebookAppApi.Model;
 using NotebookAppApi.Data;
+using System;
 
 namespace NotebookAppApi.Controllers
 {
@@ -49,18 +50,21 @@ namespace NotebookAppApi.Controllers
         [HttpPost]
         public void Post([FromBody]string value)
         {
+            _noteRepository.AddNote(new Note() { Body = value, CreatedOn = DateTime.Now, UpdatedOn = DateTime.Now });
         }
 
         // PUT api/notes/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public void Put(string id, [FromBody]string value)
         {
+            _noteRepository.UpdateNote(id, value);
         }
 
-        // DELETE api/notes/5
+        // DELETE api/notes/23243423
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void Delete(string id)
         {
+            _noteRepository.RemoveNote(id);
         }
     }
 }
