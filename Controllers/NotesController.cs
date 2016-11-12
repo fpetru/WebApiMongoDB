@@ -1,15 +1,15 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Microsoft.Extensions.Options;
-
 using NotebookAppApi.Interfaces;
 using NotebookAppApi.Model;
-using NotebookAppApi.Data;
+using NotebookAppApi.Infrastructure;
 using System;
+using Microsoft.AspNetCore.Cors;
 
 namespace NotebookAppApi.Controllers
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
     public class NotesController : Controller
     {
@@ -21,6 +21,7 @@ namespace NotebookAppApi.Controllers
         }
 
         // GET: notes/notes
+        [NoCache]
         [HttpGet]
         public Task<string> Get()
         {
