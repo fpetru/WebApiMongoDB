@@ -7,3 +7,5 @@
 /obj/Debug/netcoreapp1.0
 /.vs/restore.dg
 /.vscode
+/bin/Debug/netcoreapp1.1
+/obj/Debug/netcoreapp1.1

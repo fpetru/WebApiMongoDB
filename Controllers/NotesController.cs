@@ -58,7 +58,7 @@ namespace NotebookAppApi.Controllers
         [HttpPut("{id}")]
         public void Put(string id, [FromBody]string value)
         {
-            _noteRepository.UpdateNote(id, value);
+            _noteRepository.UpdateNoteDocument(id, value);
         }
 
         // DELETE api/notes/23243423

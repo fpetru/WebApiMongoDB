@@ -29,8 +29,9 @@ namespace NotebookAppApi.Data
         public async Task<Note> GetNote(string id)
         {
             var filter = Builders<Note>.Filter.Eq("Id", id);
-            var document = await _context.Notes.Find(filter).FirstOrDefaultAsync();
-            return document;
+            return await _context.Notes
+                            .Find(filter)
+                            .FirstOrDefaultAsync();
         }
 
         public async void AddNote(Note item)
@@ -46,13 +47,31 @@ namespace NotebookAppApi.Data
             return result.DeletedCount > 0;
         }
 
-        public async void UpdateNote(string id, string body)
+        public async Task<UpdateResult> UpdateNote(string id, string body)
         {
             var filter = Builders<Note>.Filter.Eq(s => s.Id, id);
             var update = Builders<Note>.Update
                             .Set(s => s.Body, body)
                             .CurrentDate(s => s.UpdatedOn);
-            var result = await _context.Notes.UpdateOneAsync(filter, update);
+            return await _context.Notes.UpdateOneAsync(filter, update);
+        }
+
+        public async Task<ReplaceOneResult> UpdateNote(string id, Note item)
+        {
+            return await _context.Notes
+                            .ReplaceOneAsync(n => n.Id.Equals(id)
+                                            , item
+                                            , new UpdateOptions { IsUpsert = true });
+        }
+
+        // Demo function - full document update
+        public async Task<ReplaceOneResult> UpdateNoteDocument(string id, string body)
+        {
+            var item = await GetNote(id) ?? new Note();
+            item.Body = body;
+            item.UpdatedOn = DateTime.Now;
+
+            return await UpdateNote(id, item);
         }
 
         public void RemoveAllNotes()
