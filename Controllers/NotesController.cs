@@ -1,11 +1,10 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using NotebookAppApi.Interfaces;
 using NotebookAppApi.Model;
 using NotebookAppApi.Infrastructure;
 using System;
-using Microsoft.AspNetCore.Cors;
+using System.Collections.Generic;
 
 namespace NotebookAppApi.Controllers
 {
@@ -20,31 +19,28 @@ namespace NotebookAppApi.Controllers
             _noteRepository = noteRepository;
         }
 
-        // GET: notes/notes
         [NoCache]
         [HttpGet]
-        public Task<string> Get()
+        public Task<IEnumerable<Note>> Get()
         {
             return GetNoteInternal();
         }
 
-        private async Task<string> GetNoteInternal()
+        private async Task<IEnumerable<Note>> GetNoteInternal()
         {
-            var notes = await _noteRepository.GetAllNotes();
-            return JsonConvert.SerializeObject(notes);
+            return await _noteRepository.GetAllNotes();
         }
 
         // GET api/notes/5
         [HttpGet("{id}")]
-        public Task<string> Get(string id)
+        public Task<Note> Get(string id)
         {
             return GetNoteByIdInternal(id);
         }
 
-        private async Task<string> GetNoteByIdInternal(string id)
+        private async Task<Note> GetNoteByIdInternal(string id)
         {
-            var note = await _noteRepository.GetNote(id) ?? new Note();
-            return JsonConvert.SerializeObject(note);
+            return await _noteRepository.GetNote(id) ?? new Note();
         }
 
         // POST api/notes
