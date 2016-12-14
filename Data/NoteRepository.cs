@@ -21,30 +21,59 @@ namespace NotebookAppApi.Data
 
         public async Task<IEnumerable<Note>> GetAllNotes()
         {
-            var documents = await _context.Notes.Find(_ => true)
-                            .ToListAsync();
-            return documents;
+            try
+            {
+                return await _context.Notes.Find(_ => true).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                // log or manage the exception
+                throw ex;
+            }
         }
 
         public async Task<Note> GetNote(string id)
         {
             var filter = Builders<Note>.Filter.Eq("Id", id);
-            return await _context.Notes
-                            .Find(filter)
-                            .FirstOrDefaultAsync();
+
+            try
+            {
+                return await _context.Notes
+                                .Find(filter)
+                                .FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                // log or manage the exception
+                throw ex;
+            }
         }
 
-        public async void AddNote(Note item)
+        public async Task AddNote(Note item)
         {
-            await _context.Notes.InsertOneAsync(item);
+            try
+            {
+                await _context.Notes.InsertOneAsync(item);
+            }
+            catch (Exception ex)
+            {
+                // log or manage the exception
+                throw ex;
+            }
         }
 
-        public async Task<bool> RemoveNote(string id)
+        public async Task<DeleteResult> RemoveNote(string id)
         {
-            var result = await _context.Notes.DeleteOneAsync(
-                 Builders<Note>.Filter.Eq("Id", id));
-
-            return result.DeletedCount > 0;
+            try
+            {
+                return await _context.Notes.DeleteOneAsync(
+                     Builders<Note>.Filter.Eq("Id", id));
+            }
+            catch (Exception ex)
+            {
+                // log or manage the exception
+                throw ex;
+            }
         }
 
         public async Task<UpdateResult> UpdateNote(string id, string body)
@@ -53,15 +82,32 @@ namespace NotebookAppApi.Data
             var update = Builders<Note>.Update
                             .Set(s => s.Body, body)
                             .CurrentDate(s => s.UpdatedOn);
-            return await _context.Notes.UpdateOneAsync(filter, update);
+
+            try
+            {
+                return await _context.Notes.UpdateOneAsync(filter, update);
+            }
+            catch (Exception ex)
+            {
+                // log or manage the exception
+                throw ex;
+            }
         }
 
         public async Task<ReplaceOneResult> UpdateNote(string id, Note item)
         {
-            return await _context.Notes
+            try
+            {
+                return await _context.Notes
                             .ReplaceOneAsync(n => n.Id.Equals(id)
                                             , item
                                             , new UpdateOptions { IsUpsert = true });
+            }
+            catch (Exception ex)
+            {
+                // log or manage the exception
+                throw ex;
+            }
         }
 
         // Demo function - full document update
@@ -74,9 +120,17 @@ namespace NotebookAppApi.Data
             return await UpdateNote(id, item);
         }
 
-        public void RemoveAllNotes()
+        public async Task<DeleteResult> RemoveAllNotes()
         {
-            _context.Notes.DeleteManyAsync(new BsonDocument());
+            try
+            {
+                return await _context.Notes.DeleteManyAsync(new BsonDocument());
+            }
+            catch (Exception ex)
+            {
+                // log or manage the exception
+                throw ex;
+            }
         }
     }
 }
