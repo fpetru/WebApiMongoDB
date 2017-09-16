@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.9
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiMongoDB", "WebApiMongoDB.csproj", "{FC6B8320-227C-4DE2-A1EA-8B58D9B04F54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotebookAppApi", "NotebookAppApi.csproj", "{2C2FC4BF-2EEB-438C-8F91-67CA423FC08F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,12 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FC6B8320-227C-4DE2-A1EA-8B58D9B04F54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FC6B8320-227C-4DE2-A1EA-8B58D9B04F54}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FC6B8320-227C-4DE2-A1EA-8B58D9B04F54}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FC6B8320-227C-4DE2-A1EA-8B58D9B04F54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C2FC4BF-2EEB-438C-8F91-67CA423FC08F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C2FC4BF-2EEB-438C-8F91-67CA423FC08F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C2FC4BF-2EEB-438C-8F91-67CA423FC08F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C2FC4BF-2EEB-438C-8F91-67CA423FC08F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D093D56B-E229-4700-8D2F-FFE6C66EFC0C}
 	EndGlobalSection
 EndGlobal

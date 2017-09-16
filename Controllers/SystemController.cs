@@ -30,7 +30,7 @@ namespace NotebookAppApi.Controllers
                 _noteRepository.AddNote(new Note() { Id = "3", Body = "Test note 3", CreatedOn = DateTime.Now, UpdatedOn = DateTime.Now, UserId = 2 });
                 _noteRepository.AddNote(new Note() { Id = "4", Body = "Test note 4", CreatedOn = DateTime.Now, UpdatedOn = DateTime.Now, UserId = 2 });
 
-                return "Done";
+                return "Database NotesDb was created, and collection 'Notes' was filled with 4 sample items";
             }
 
             return "Unknown";
