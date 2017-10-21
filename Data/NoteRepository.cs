@@ -62,12 +62,15 @@ namespace NotebookAppApi.Data
             }
         }
 
-        public async Task<DeleteResult> RemoveNote(string id)
+        public async Task<bool> RemoveNote(string id)
         {
             try
             {
-                return await _context.Notes.DeleteOneAsync(
+                DeleteResult actionResult = await _context.Notes.DeleteOneAsync(
                      Builders<Note>.Filter.Eq("Id", id));
+
+                return actionResult.IsAcknowledged 
+                    && actionResult.DeletedCount > 0;
             }
             catch (Exception ex)
             {
@@ -76,7 +79,7 @@ namespace NotebookAppApi.Data
             }
         }
 
-        public async Task<UpdateResult> UpdateNote(string id, string body)
+        public async Task<bool> UpdateNote(string id, string body)
         {
             var filter = Builders<Note>.Filter.Eq(s => s.Id, id);
             var update = Builders<Note>.Update
@@ -85,7 +88,10 @@ namespace NotebookAppApi.Data
 
             try
             {
-                return await _context.Notes.UpdateOneAsync(filter, update);
+                UpdateResult actionResult = await _context.Notes.UpdateOneAsync(filter, update);
+
+                return actionResult.IsAcknowledged
+                    && actionResult.ModifiedCount > 0;
             }
             catch (Exception ex)
             {
@@ -94,14 +100,16 @@ namespace NotebookAppApi.Data
             }
         }
 
-        public async Task<ReplaceOneResult> UpdateNote(string id, Note item)
+        public async Task<bool> UpdateNote(string id, Note item)
         {
             try
             {
-                return await _context.Notes
-                            .ReplaceOneAsync(n => n.Id.Equals(id)
-                                            , item
-                                            , new UpdateOptions { IsUpsert = true });
+                ReplaceOneResult actionResult = await _context.Notes
+                                                .ReplaceOneAsync(n => n.Id.Equals(id)
+                                                                , item
+                                                                , new UpdateOptions { IsUpsert = true });
+                return actionResult.IsAcknowledged
+                    && actionResult.ModifiedCount > 0;
             }
             catch (Exception ex)
             {
@@ -111,7 +119,7 @@ namespace NotebookAppApi.Data
         }
 
         // Demo function - full document update
-        public async Task<ReplaceOneResult> UpdateNoteDocument(string id, string body)
+        public async Task<bool> UpdateNoteDocument(string id, string body)
         {
             var item = await GetNote(id) ?? new Note();
             item.Body = body;
@@ -120,11 +128,14 @@ namespace NotebookAppApi.Data
             return await UpdateNote(id, item);
         }
 
-        public async Task<DeleteResult> RemoveAllNotes()
+        public async Task<bool> RemoveAllNotes()
         {
             try
             {
-                return await _context.Notes.DeleteManyAsync(new BsonDocument());
+                DeleteResult actionResult = await _context.Notes.DeleteManyAsync(new BsonDocument());
+
+                return actionResult.IsAcknowledged
+                    && actionResult.DeletedCount > 0;
             }
             catch (Exception ex)
             {

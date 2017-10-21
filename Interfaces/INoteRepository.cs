@@ -9,15 +9,20 @@ namespace NotebookAppApi.Interfaces
     {
         Task<IEnumerable<Note>> GetAllNotes();
         Task<Note> GetNote(string id);
-        Task AddNote(Note item);
-        Task<DeleteResult> RemoveNote(string id);
 
-        Task<UpdateResult> UpdateNote(string id, string body);
+        // add new note document
+        Task AddNote(Note item);
+
+        // remove a single document / note
+        Task<bool> RemoveNote(string id);
+
+        // update just a single document / note
+        Task<bool> UpdateNote(string id, string body);
 
         // demo interface - full document update
-        Task<ReplaceOneResult> UpdateNoteDocument(string id, string body);
+        Task<bool> UpdateNoteDocument(string id, string body);
 
         // should be used with high cautious, only in relation with demo setup
-        Task<DeleteResult> RemoveAllNotes();
+        Task<bool> RemoveAllNotes();
     }
 }
