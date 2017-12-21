@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using NotebookAppApi.Model;
-using MongoDB.Driver;
 
 namespace NotebookAppApi.Interfaces
 {
@@ -24,5 +23,8 @@ namespace NotebookAppApi.Interfaces
 
         // should be used with high cautious, only in relation with demo setup
         Task<bool> RemoveAllNotes();
+
+        // creates a sample index
+        Task<string> CreateIndex();
     }
 }

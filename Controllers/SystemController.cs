@@ -25,6 +25,8 @@ namespace NotebookAppApi.Controllers
             if (setting == "init")
             {
                 _noteRepository.RemoveAllNotes();
+                var name = _noteRepository.CreateIndex();
+
                 _noteRepository.AddNote(new Note() { Id = "1", Body = "Test note 1", CreatedOn = DateTime.Now, UpdatedOn = DateTime.Now, UserId = 1 });
                 _noteRepository.AddNote(new Note() { Id = "2", Body = "Test note 2", CreatedOn = DateTime.Now, UpdatedOn = DateTime.Now, UserId = 1 });
                 _noteRepository.AddNote(new Note() { Id = "3", Body = "Test note 3", CreatedOn = DateTime.Now, UpdatedOn = DateTime.Now, UserId = 2 });
