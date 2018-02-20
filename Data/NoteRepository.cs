@@ -32,14 +32,15 @@ namespace NotebookAppApi.Data
             }
         }
 
+        // query after internal or internal id
+        //
         public async Task<Note> GetNote(string id)
         {
-            var filter = Builders<Note>.Filter.Eq("Id", id);
-
             try
             {
+                ObjectId internalId = GetInternalId(id);
                 return await _context.Notes
-                                .Find(filter)
+                                .Find(note => note.Id == id || note.InternalId == internalId)
                                 .FirstOrDefaultAsync();
             }
             catch (Exception ex)
@@ -47,6 +48,15 @@ namespace NotebookAppApi.Data
                 // log or manage the exception
                 throw ex;
             }
+        }
+
+        private ObjectId GetInternalId(string id)
+        {
+            ObjectId internalId;
+            if (!ObjectId.TryParse(id, out internalId))
+                internalId = ObjectId.Empty;
+
+            return internalId;
         }
 
         public async Task AddNote(Note item)

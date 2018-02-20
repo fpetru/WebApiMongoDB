@@ -4,8 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using NotebookAppApi.Interfaces;
 using NotebookAppApi.Model;
 
-// For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace NotebookAppApi.Controllers
 {
     [Route("api/[controller]")]

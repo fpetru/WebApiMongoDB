@@ -21,33 +21,30 @@ namespace NotebookAppApi.Controllers
 
         [NoCache]
         [HttpGet]
-        public Task<IEnumerable<Note>> Get()
-        {
-            return GetNoteInternal();
-        }
-
-        private async Task<IEnumerable<Note>> GetNoteInternal()
+        public async Task<IEnumerable<Note>> Get()
         {
             return await _noteRepository.GetAllNotes();
         }
 
         // GET api/notes/5
         [HttpGet("{id}")]
-        public Task<Note> Get(string id)
-        {
-            return GetNoteByIdInternal(id);
-        }
-
-        private async Task<Note> GetNoteByIdInternal(string id)
+        public async Task<Note> Get(string id)
         {
             return await _noteRepository.GetNote(id) ?? new Note();
         }
 
         // POST api/notes
         [HttpPost]
-        public void Post([FromBody]string value)
+        public void Post([FromBody] NoteParam newNote)
         {
-            _noteRepository.AddNote(new Note() { Body = value, CreatedOn = DateTime.Now, UpdatedOn = DateTime.Now });
+            _noteRepository.AddNote(new Note
+                                        {
+                                            Id = newNote.Id,
+                                            Body = newNote.Body,
+                                            CreatedOn = DateTime.Now,
+                                            UpdatedOn = DateTime.Now,
+                                            UserId = newNote.UserId
+                                        });
         }
 
         // PUT api/notes/5
