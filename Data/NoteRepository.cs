@@ -73,8 +73,7 @@ namespace NotebookAppApi.Data
         // Try to convert the Id to a BSonId value
         private ObjectId GetInternalId(string id)
         {
-            ObjectId internalId;
-            if (!ObjectId.TryParse(id, out internalId))
+            if (!ObjectId.TryParse(id, out ObjectId internalId))
                 internalId = ObjectId.Empty;
 
             return internalId;
