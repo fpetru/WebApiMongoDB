@@ -175,17 +175,20 @@ namespace NotebookAppApi.Data
             }
         }
 
-        // it creates a compound index (first using UserId, and then Body)
+        // it creates a sample compound index (first using UserId, and then Body)
+        // 
         // MongoDb automatically detects if the index already exists - in this case it just returns the index details
         public async Task<string> CreateIndex()
         {
             try
             {
-                return await _context.Notes.Indexes
-                                           .CreateOneAsync(Builders<Note>
-                                                                .IndexKeys
-                                                                .Ascending(item => item.UserId)
-                                                                .Ascending(item => item.Body));
+                IndexKeysDefinition <Note> keys = Builders<Note>
+                                                    .IndexKeys
+                                                    .Ascending(item => item.UserId)
+                                                    .Ascending(item => item.Body);
+
+                return await _context.Notes
+                                .Indexes.CreateOneAsync(new CreateIndexModel<Note>(keys));
             }
             catch (Exception ex)
             {
