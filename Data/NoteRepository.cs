@@ -7,6 +7,7 @@ using MongoDB.Driver;
 using NotebookAppApi.Interfaces;
 using NotebookAppApi.Model;
 using MongoDB.Bson;
+using MongoDB.Driver.Linq;
 
 namespace NotebookAppApi.Data
 {
@@ -32,7 +33,7 @@ namespace NotebookAppApi.Data
             }
         }
 
-        // query after internal or internal id
+        // query after Id or InternalId (BSonId value)
         //
         public async Task<Note> GetNote(string id)
         {
@@ -50,6 +51,26 @@ namespace NotebookAppApi.Data
             }
         }
 
+        // query after body text, updated time, and header image size
+        //
+        public async Task<IEnumerable<Note>> GetNote(string bodyText, DateTime updatedFrom, long headerSizeLimit)
+        {
+            try
+            {
+                var query = _context.Notes.Find(note => note.Body.Contains(bodyText) &&
+                                       note.UpdatedOn >= updatedFrom &&
+                                       note.HeaderImage.ImageSize <= headerSizeLimit);
+
+                return await query.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                // log or manage the exception
+                throw ex;
+            }
+        }
+
+        // Try to convert the Id to a BSonId value
         private ObjectId GetInternalId(string id)
         {
             ObjectId internalId;

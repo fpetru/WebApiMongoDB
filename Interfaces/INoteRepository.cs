@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using NotebookAppApi.Model;
 
@@ -7,7 +8,11 @@ namespace NotebookAppApi.Interfaces
     public interface INoteRepository
     {
         Task<IEnumerable<Note>> GetAllNotes();
+
         Task<Note> GetNote(string id);
+
+        // query after multiple parameters
+        Task<IEnumerable<Note>> GetNote(string bodyText, DateTime updatedFrom, long headerSizeLimit);
 
         // add new note document
         Task AddNote(Note item);
