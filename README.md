@@ -21,5 +21,5 @@ It is a quick walkthrough on using .NET Core 2 to build a Web API layer using Mo
  - Download or clone this project locally 
  - Install the tools - see here more details: [http://qappdesign.com/using-mongodb-with-net-core-webapi](http://qappdesign.com/using-mongodb-with-net-core-webapi)
  - Run first the MongoDB server (details in the article)
- - Then in the console, within the current project folder, run the next two commands:"dotnet restore", and then "dotnet run"
+ - Then in the console, within the current project folder, run the next two commands: `dotnet restore`, and then `dotnet run`
  - The ASP.NET Core WebAPI will run using IIS (default settings: http://localhost:5000)
