@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Options;
-using MongoDB.Driver;
-
-using NotebookAppApi.Interfaces;
-using NotebookAppApi.Model;
 using MongoDB.Bson;
+using MongoDB.Driver;
+using NotebookAppApi.Model;
+using System.Threading.Tasks;
+using NotebookAppApi.Interfaces;
+using System.Collections.Generic;
+using Microsoft.Extensions.Options;
+
 using MongoDB.Driver.Linq;
 
 namespace NotebookAppApi.Data
